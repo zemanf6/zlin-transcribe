@@ -10,9 +10,9 @@
     "video_anchor_offset_seconds": 470,
     "timezone": "Europe/Prague",
     "source_note": "Metadata generated from the user-supplied agenda excerpt and speaker list. The excerpt ends at 10:26:55, so the dataset is partial.",
-    "subtitles_url": "/data/subtitles-video.vtt",
-    "transcript_url": "/data/transcript.json",
-    "summary_url": "/data/summary.json"
+    "subtitles_url": "data/subtitles-video.vtt",
+    "transcript_url": "data/transcript.json",
+    "summary_url": "data/summary.json"
   },
   "speakers": [
     {
