@@ -20,7 +20,9 @@ export function useSessionData(): UseSessionDataResult {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${import.meta.env.BASE_URL}data/session-metadata.json`)
+        const response = await fetch(
+          `${import.meta.env.BASE_URL}data/sessions/zlin-zm-2026-03-26/session-metadata.json`,
+        );
         if (!response.ok) {
           throw new Error(`Metadata request failed with status ${response.status}`);
         }
