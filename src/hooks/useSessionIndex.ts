@@ -1,43 +1,42 @@
 import { useEffect, useState } from 'react';
-import type { SessionMetadata } from '../types/session';
+import type { SessionIndexItem } from '../types/session';
 import { resolvePublicUrl } from '../utils/publicUrl';
 
-interface UseSessionDataResult {
-  data: SessionMetadata | null;
+interface UseSessionIndexResult {
+  data: SessionIndexItem[];
   isLoading: boolean;
   error: Error | null;
 }
 
-export function useSessionData(metadataUrl?: string | null): UseSessionDataResult {
-  const [data, setData] = useState<SessionMetadata | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+const SESSIONS_INDEX_URL = 'data/sessions.json';
+
+export function useSessionIndex(): UseSessionIndexResult {
+  const [data, setData] = useState<SessionIndexItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     let isDisposed = false;
 
     async function load(): Promise<void> {
-      if (!metadataUrl) {
-        setData(null);
-        setIsLoading(false);
-        setError(null);
-        return;
-      }
-
       try {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(resolvePublicUrl(metadataUrl));
+        const response = await fetch(resolvePublicUrl(SESSIONS_INDEX_URL));
 
         if (!response.ok) {
-          throw new Error(`Metadata request failed with status ${response.status}`);
+          throw new Error(`Sessions index request failed with status ${response.status}`);
         }
 
-        const payload = (await response.json()) as SessionMetadata;
+        const payload = (await response.json()) as SessionIndexItem[];
+
+        const sortedPayload = [...payload].sort((left, right) =>
+          right.date.localeCompare(left.date),
+        );
 
         if (!isDisposed) {
-          setData(payload);
+          setData(sortedPayload);
         }
       } catch (caughtError) {
         if (!isDisposed) {
@@ -55,7 +54,7 @@ export function useSessionData(metadataUrl?: string | null): UseSessionDataResul
     return () => {
       isDisposed = true;
     };
-  }, [metadataUrl]);
+  }, []);
 
   return { data, isLoading, error };
 }

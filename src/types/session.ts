@@ -1,3 +1,12 @@
+export interface SessionIndexItem {
+  id: string;
+  city: string;
+  title: string;
+  date: string;
+  label?: string | null;
+  metadata_url: string;
+}
+
 export interface SessionInfo {
   id: string;
   city: string;
@@ -78,13 +87,6 @@ export interface SessionSummarySection {
   id: string;
   title: string;
   content: string;
-}
-
-export interface SessionSummary {
-  schema_version: string;
-  title: string;
-  short_summary: string;
-  sections: SessionSummarySection[];
 }
 
 export interface SessionSummaryHighlight {
