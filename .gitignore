@@ -48,3 +48,9 @@ venv/
 tools/raw/
 
 public/videos
+
+# Raw audio files
+*.flac
+*.wav
+*.mp3
+*.m4a
